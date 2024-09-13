@@ -7,6 +7,14 @@ class Agent():
         self.yPos = 0
         self.direction = 0 #in radians (0 - 2pi)
         self.velocity = 1
+        self.sourceDistance = 1.0
+
+    def calculateSourceDistance(self, sourceX, sourceY):
+        sourceDistance = np.sqrt(((self.xPos - sourceX) ** 2) + ((self.yPos-sourceY) ** 2))
+        return sourceDistance
+
+    def getSourceDistance(self):
+        return self.sourceDistance
 
     def getX(self):
         return self.xPos
@@ -18,7 +26,7 @@ class Agent():
         self.direction = np.random.random() * 2 * np.pi
 
     def move(self):
-        self.velocity = np.random.random()
+        self.velocity = np.random.random() * 0.5
         self.xPos += self.velocity * np.cos(self.direction)
         self.yPos += self.velocity * np.sin(self.direction)
 
@@ -26,6 +34,6 @@ class Agent():
         self.rotate()
         self.move()
 
-    def getDistance(self):
-        distance = np.sqrt((self.xPos ** 2) + (self.yPos ** 2))
-        return distance
+    def getOriginDistance(self):
+        originDistance = np.sqrt((self.xPos ** 2) + (self.yPos ** 2))
+        return originDistance

@@ -6,8 +6,13 @@ import agent
 
 
 def main():
-        loopIterations = 100
-        pop = 2
+        loopIterations = 1000
+        pop = 60
+
+        #Create a stimulus source at 
+        sourceX = 30
+        sourceY = 20
+
         (xPosList, yPosList) = multipleOrganismSimulation(pop, loopIterations)
         print(xPosList)
         print(yPosList)
@@ -27,42 +32,41 @@ def singleOrganismSimulation(iterations):
 
 
 def multipleOrganismSimulation(population, iterations):
-    xPosList = np.zeros((population, iterations-1))
-    yPosList = np.zeros((population, iterations-1))
+    xPosList = np.zeros((population, iterations))
+    yPosList = np.zeros((population, iterations))
     for numOrganism in range(population):
         currentXList, currentYList = singleOrganismSimulation(iterations)
         xPosList[numOrganism] = currentXList
         yPosList[numOrganism] = currentYList
     return xPosList, yPosList
 
-
-
-
 def animate_plot(iteration, xList, yList, population=1):
-    # Create a figure and an axes
     fig, ax = plt.subplots()
-    x_data, y_data = [], []
-    ln, = plt.plot([], [], 'b-', animated=True)
-    ln2, = ax.plot([],[],'ro')
+    x_data = [[] for numLine in range(population)]
+    y_data = [[] for numLine in range(population)]
+    lines = [ax.plot([], [], animated=True)[0] for lineNum in range(population)]
+    origin_dot, = plt.plot(0, 0, 'ko', markersize=3)  # 'ko' means black color ('k') and circle marker ('o')
 
-    # Initialize the plot limits
+    # colors = plt.cm.viridis(np.linspace(0, 1, population))  # Generate a range of colors for lines
+    colors = plt.cm.hsv(np.linspace(0, 1, population))  # 'hsv' covers the full spectrum of hues
+
+    for line, color in zip(lines, colors):
+        line.set_color(color)
+
     def init():
-        # plt.clf()
-        ax.set_xlim(-10, 10)
-        ax.set_ylim(-10, 10)
-        return ln,
-
-    # Update the plot with new data points to extend the line
+        ax.set_xlim(-50, 50)
+        ax.set_ylim(-50, 50)
+        return lines + [origin_dot]
+    
     def update(frame, xList, yList):
-        x_data.append(xList[frame])
-        y_data.append(yList[frame])
-        ln.set_data(x_data, y_data)
-        ln2.set_data(np.zeros(1), np.zeros(1))
-        return (ln, ln2)
+        for numLine in range(population):
+            x_data[numLine].append(xList[numLine][frame])
+            y_data[numLine].append(yList[numLine][frame])
+            lines[numLine].set_data(x_data[numLine], y_data[numLine])
+        return lines + [origin_dot]
 
-    # Create an animation object
-    ani = FuncAnimation(fig, update, fargs=(xList, yList, ), frames=iteration, interval=100, init_func=init, blit=True, repeat=False)
+    ani = FuncAnimation(fig, update, fargs=(xList, yList, ), frames=iteration, interval=1, init_func=init, blit=True, repeat=False)
+    # plt.plot( 0,0,'ko')
     plt.show()  # Display the plot
 
-# Call the function to animate and display the plot
 main()
