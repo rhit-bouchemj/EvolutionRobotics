@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 
 class Agent():
 
@@ -8,10 +9,14 @@ class Agent():
         self.direction = 0 #in radians (0 - 2pi)
         self.velocity = 1
         self.sourceDistance = 1.0
+        # self.prevSourceDistance = sys.maxint
 
     def calculateSourceDistance(self, sourceX, sourceY):
         sourceDistance = np.sqrt(((self.xPos - sourceX) ** 2) + ((self.yPos-sourceY) ** 2))
         return sourceDistance
+    
+    # def movedFarther(self):
+    #     return self.sourceDistance > self.prevSourceDistance
 
     def getSourceDistance(self):
         return self.sourceDistance
