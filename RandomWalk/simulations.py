@@ -6,19 +6,15 @@ import agent
 
 
 def main():
-        loopIterations = 100
+        loopIterations = 1000
         pop = 50
-        sensing = True
+        sensing = False
 
         #Create a stimulus source at X,Y
         source = [80, -20]
 
         (xPosList, yPosList, distanceList) = multipleOrganismSimulation(pop, loopIterations, sensing, source)
-        print(xPosList)
-        print(yPosList)
-        print(distanceList)
-        print(np.sum(xPosList.T[-1]))
-        print(np.sum(yPosList.T[-1]))
+        
         plotDistance(loopIterations, distanceList, pop)
         animate_plot(loopIterations, xPosList, yPosList, pop)
     
@@ -51,7 +47,7 @@ def multipleOrganismSimulation(population, iterations, sensing=False, source=[0,
         distance[numOrganism] = currentDistance
     return xPosList, yPosList, distance
 
-def animate_plot(iteration, xList, yList, population=1, frameModifer=1):
+def animate_plot(iteration, xList, yList, population=1, frameModifer=3):
     fig1, ax1 = plt.subplots()
     x_data = [[] for numLine in range(population)]
     y_data = [[] for numLine in range(population)]
