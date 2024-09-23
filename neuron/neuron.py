@@ -17,4 +17,4 @@ class Perceptron:
         self.bias = np.random.randn()
 
     def forward(self, int1, int2):
-        return step((self.w1 * int1) + (self.w2 * int2) + (self.bias))
+        return step((self.w1 * int1) + (self.w2 * int2) + self.bias)
