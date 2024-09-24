@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def step(x):
     if x <= 0:
@@ -16,5 +17,24 @@ class Perceptron:
         self.w2 = np.random.randn()
         self.bias = np.random.randn()
 
-    def forward(self, int1, int2):
-        return step((self.w1 * int1) + (self.w2 * int2) + self.bias)
+    def viz():
+        X = np.linspace(-1.05,1.05,100)
+        Y = np.linspace(-1.05,1.05,100)
+        output = np.zeros((100,100))
+
+        i = 0
+        for x in X:
+            j = 0
+            for y in Y:
+                output[i,j] = a.forward(x,y)
+                j += 1
+            i += 1
+
+        plt.pcolormesh(X,Y,output)
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.show()
+
+
+    def forward(self, i1, i2):
+        return step((self.w1 * i1) + (self.w2 * i2) + self.bias)

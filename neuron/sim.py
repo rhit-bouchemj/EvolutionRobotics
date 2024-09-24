@@ -4,19 +4,18 @@ import matplotlib.pyplot as plt
 
 a = neuron.Perceptron()
 
-X = np.linspace(-1.05,1.05,100)
-Y = np.linspace(-1.05,1.05,100)
-output = np.zeros((100,100))
+a.viz(10, "before training")
 
-i = 0
-for x in X:
-    j = 0
-    for y in Y:
-        output[i,j] = a.forward(x,y)
-        j += 1
-    i += 1
+trials = 100
 
-plt.pcolormesh(X,Y,output)
-plt.xlabel("X")
-plt.ylabel("Y")
+error = np.zeros(trials)
+
+for t in range (trials):
+    error[t] = a.train(0,0,0) + a.train(0,1,0) + a.train(0,0,1) + a.train(1,1,1)
+
+a.viz(10,"After Training")
+
+plt.plot(error)
+plt.xlabel("Trials")
+plt.ylabel("Error")
 plt.show()
