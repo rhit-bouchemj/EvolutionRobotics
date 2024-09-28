@@ -1,7 +1,6 @@
 import numpy as np
 
 class MGA_disc():
-
     def __init__(self, fitnessfunction, genesize, popsize, recomprob, mutationprob, tournaments):
         self.genesize = genesize
         self.popsize = popsize
