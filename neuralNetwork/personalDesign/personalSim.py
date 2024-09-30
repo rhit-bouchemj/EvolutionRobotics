@@ -1,3 +1,4 @@
+
 ##################################################################################
 # Example script for evolving a feedforward neural network to solve XOR problem 
 #
@@ -11,12 +12,12 @@ import fnn
 import ea
 
 # Parameters of the XOR task
-# dataset = [[-1,-1],[-1,1],[1,-1],[1,1]]
-# labels = [0,1,1,0]
+dataset = [[-1,-1],[-1,1],[1,-1],[1,1]]
+labels = [0,1,1,0]
 
 # Parameters for another task
-dataset = [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1],[-0.5,-0.5],[-0.5,0.5],[0.5,-0.5],[0.5,0.5]]
-labels = [1,1,1,1,1,1,1,1,0,0,0,0]
+# dataset = [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1],[-0.5,-0.5],[-0.5,0.5],[0.5,-0.5],[0.5,0.5]]
+# labels = [1,1,1,1,1,1,1,1,0,0,0,0]
 
 # Parameters of the neural network
 layers = [2,3,1]
