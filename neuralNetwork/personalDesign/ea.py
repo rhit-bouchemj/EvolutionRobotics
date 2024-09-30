@@ -10,7 +10,7 @@ class MGA():
         self.mutationprob = mutationprob
         self.tournaments = tournaments
         self.fitnessfunction = fitnessfunction
-        self.pop = np.random.random((popsize,genesize))*2 - 1
+        self.pop = np.random.random((popsize,genesize))*2 - 1 #population filled with range -1 to 1 (multiply by personal reange later)
         self.fit = self.calculateFitness()
         # stats
         gens = tournaments//popsize      
@@ -63,4 +63,5 @@ class MGA():
         plt.xlabel("Generations")
         plt.ylabel("Fitness")
         plt.title("Evolution")
+        plt.legend()
         plt.show()
