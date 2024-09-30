@@ -55,6 +55,8 @@ class MGA():
                 self.bestind[gen] = np.argmax(self.fit)                
                 gen += 1
 #                print(t,np.max(self.fit),np.mean(self.fit),np.min(self.fit),np.argmax(self.fit))
+    def getBestFit(self):
+        return self.bestfit
 
     def showFitness(self):
         plt.plot(self.bestfit,label="Best")

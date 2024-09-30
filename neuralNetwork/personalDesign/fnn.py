@@ -34,7 +34,7 @@ class FNN:
             end = start + self.units_per_layer[l]*self.units_per_layer[l+1] #end = unitl *unitl+1 (example = 6)
             self.weights.append((params[start:end]*self.weightrange).reshape(self.units_per_layer[l],self.units_per_layer[l+1])) # add weights for categories iteratively (can be negative)
             start = end
-        print(self.weights)
+        # print(self.weights)
         self.biases = []
         for l in np.arange(self.num_layers-1):
             end = start + self.units_per_layer[l+1]

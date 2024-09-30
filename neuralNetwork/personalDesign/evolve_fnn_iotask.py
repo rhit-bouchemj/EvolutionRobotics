@@ -16,17 +16,24 @@ import ea
 
 # Parameters for another task
 dataset = [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1],[-0.5,-0.5],[-0.5,0.5],[0.5,-0.5],[0.5,0.5]]
-labels = [1,1,1,1,0,0,0,0,1,1,0,0]
+labels = [1,1,1,1,1,1,1,1,0,0,0,0]  
 
 # Parameters of the neural network
-layers = [2,3,5,1]
+numberOfLayers = np.random.randint(2,10)
+layers = []
+layers.append(2)
+for currentLayer in range(numberOfLayers - 2):
+    layers.append(np.random.randint(3,10))
+layers.append(1)
+# layers = [2,5,7,10,7,5,1]
+# layers = [2,3,1]
+
+print(layers)
 
 # Parameters of the evolutionary algorithm
 genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
-print(layers[1:])
-print(layers[:-1])
 print("Number of parameters:",genesize)
-popsize = 5000
+popsize = 50
 recombProb = 0.5
 mutatProb = 0.01
 tournaments = 100*popsize 

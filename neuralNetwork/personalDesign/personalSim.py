@@ -1,51 +1,105 @@
 ##################################################################################
-# Feed-forward neural network for teaching and learning.
-# Works with any number of hidden layers/neurons.
-# Supports the following activation functions: sigmoidm, tanh, relu, linear, gaussian, and identity.
+# Example script for evolving a feedforward neural network to solve XOR problem 
 #
 # Eduardo Izquierdo
 # September 2024
 ##################################################################################
 
 import numpy as np
+import matplotlib.pyplot as plt
+import fnn 
+import ea
 
-class FNN:
-    def __init__(self, units_per_layer):
-        """ Create Feedforward Neural Network based on specifications
-        units_per_layer: (list, len>=2) Number of neurons in each layer including input, hidden and output
-        """
-        self.units_per_layer = units_per_layer #neurons per layer (array)
-        self.num_layers = len(units_per_layer) #number of layers
+# Parameters of the XOR task
+# dataset = [[-1,-1],[-1,1],[1,-1],[1,1]]
+# labels = [0,1,1,0]
 
-        # lambdas for supported activation functions
-        self.activation = lambda x: 1 / (1 + np.exp(-x)) #The sigmoid that determines output from input (x = input)
 
-        self.weightrange = 5
-        self.biasrange = 5
+def fitnessFunction(genotype):
+    # Step 1: Create the neural network.
+    a = fnn.FNN(layers)
 
-    def setParams(self, params):
-        """ Set the weights, biases, and activation functions of the neural network 
-        Weights and biases are set directly by a parameter;
-        The activation function for each layer is set by the parameter with the highest value (one for each possible one out of the six)
-        """
-        self.weights = []
-        start = 0
-        for l in np.arange(self.num_layers-1): # for all layers but last (because uses l+1)
-            end = start + self.units_per_layer[l]*self.units_per_layer[l+1] #end = unitl *unitl+1 (example = 6)
-            self.weights.append((params[start:end]*self.weightrange).reshape(self.units_per_layer[l],self.units_per_layer[l+1]))
-            start = end
-        self.biases = []
-        for l in np.arange(self.num_layers-1):
-            end = start + self.units_per_layer[l+1]
-            self.biases.append((params[start:end]*self.biasrange).reshape(1,self.units_per_layer[l+1]))
-            start = end
+    # Step 2. Set the parameters of the neural network according to the genotype.
+    a.setParams(genotype)
+    
+    # Step 3. For each training point in the dataset, evaluate the current neural network.
+    error = 0.0
+    for i in range(len(dataset)):
+        error += np.abs(a.forward(dataset[i]) - labels[i])
 
-    def forward(self, inputs):
-        """ Forward propagate the given inputs through the network """
-        states = np.asarray(inputs)
-        for l in np.arange(self.num_layers - 1):
-            if states.ndim == 1:
-                states = [states]
-            states = self.activation(np.matmul(states, self.weights[l]) + self.biases[l])
-        return states
+    return 1 - (error/len(dataset))
+
+
+
+# Function to visualize the best solution
+def viz(neuralnet, dataset, label):
+    X = np.linspace(-1.05, 1.05, 100)
+    Y = np.linspace(-1.05, 1.05, 100)
+    output = np.zeros((100,100))
+    i = 0
+    for x in X: 
+        j = 0
+        for y in Y: 
+            output[i,j] = neuralnet.forward([x,y])
+            j += 1
+        i += 1
+    plt.contourf(X,Y,output)
+    plt.colorbar()
+    plt.xlabel("x")
+    plt.ylabel("y")
+    for i in range(len(dataset)):
+        if label[i] == 1:
+            plt.plot(dataset[i][0],dataset[i][1],'wo')
+        else:
+            plt.plot(dataset[i][0],dataset[i][1],'wx')
+    plt.show()  
+
+
+
+
+# Parameters for another task
+dataset = [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1],[-0.5,-0.5],[-0.5,0.5],[0.5,-0.5],[0.5,0.5]]
+labels = [1,1,1,1,1,1,1,1,0,0,0,0]  
+
+numIterations = 10
+bestList = []
+# Parameters of the neural network
+for i in range(numIterations):
+    numberOfLayers = 5#np.random.randint(2,10)
+    layers = []
+    layers.append(2)
+    for currentLayer in range(numberOfLayers - 2):
+        layers.append(np.random.randint(3,10))
+    layers.append(1)
+    # layers = [2,5,7,10,7,5,1]
+    # layers = [2,3,6,8,1]
+
+    print(layers)
+
+    # Parameters of the evolutionary algorithm
+    genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
+    print("Number of parameters:",genesize)
+    popsize = 50
+    recombProb = 0.5
+    mutatProb = 0.01
+    tournaments = 100*popsize 
+    # Evolve
+    ga = ea.MGA(fitnessFunction, genesize, popsize, recombProb, mutatProb, tournaments)
+    ga.run()
+    # bestList.append(ga.getBestFit())
+    plt.plot(ga.getBestFit(), label=i)
+
+    # Obtain best agent
+    best = int(ga.bestind[-1])
+    # print(best)
+    a = fnn.FNN(layers)
+    a.setParams(ga.pop[best])
+
+plt.xlabel("Generations")
+plt.ylabel("Fitness")
+plt.title("Evolution")
+plt.legend()
+plt.show()
+    # Visualize data
+# viz(a, dataset, labels)
 
