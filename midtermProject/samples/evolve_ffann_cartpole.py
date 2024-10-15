@@ -12,19 +12,19 @@ id = sys.argv[1]
 layers = [3,10,10,1]
 
 # Task Params
-duration = 20
-stepsize = 0.02    
-noisestd = 0.01 
+duration = 200000 # how many steps the sim takes
+stepsize = 0.02   # how mucht time is between each step
+noisestd = 0.01
 
 # Time
 time = np.arange(0.0,duration,stepsize)
 
 # EA Params
-popsize = 10
+popsize = 100
 genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
 recombProb = 0.5
 mutatProb = 0.01
-tournaments = 50*popsize
+tournaments = 500*popsize
 
 # Fitness initialization ranges
 trials_theta = 2
@@ -68,7 +68,7 @@ ga = ea.MGA(fitnessFunction, genesize, popsize, recombProb, mutatProb, tournamen
 ga.run()
 np.save("evol"+id+".npy",ga.bestfit)
 
-#ga.showFitness()
+ga.showFitness()
 
 # Get best evolved network and show its activity
 bestind_num = int(ga.bestind[-1])
