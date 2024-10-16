@@ -59,20 +59,19 @@ def fitnessFunction(genotype):
                     while f >= stepsize and t < duration:   #Until t is longer than the duration of the sym. or the system goes out of bounds (f becomes 0 when OoB)    
                         inp = body.state()  #input array into NN
                         out = nn.forward(inp)*2 - 1 + np.random.normal(0.0,noisestd)    #average the output around 0 (-1 to 1) and add random noise
-                        f = body.step(stepsize, out)    
-                        fit += f
-                        t += stepsize
-    return fit/(duration*total_trials)
+                        f = body.step(stepsize, out)    #Out is a 2D array; return step size (and updates all paremeters as if time passed)
+                        fit += f    #fitness determined based off of how long the system lasts (won't work for pendulumn)
+                        t += stepsize   #update t <-- get closer to stopping sim
+    return fit/(duration*total_trials) #fitness function <-- 1 when all the initial conditions result in the robot staying alive
 
 # Evolve and visualize fitness over generations
 ga = ea.MGA(fitnessFunction, genesize, popsize, recombProb, mutatProb, tournaments)
 ga.run()
-np.save("evol"+id+".npy",ga.bestfit)
+np.save("evol"+id+".npy",ga.bestfit)    #Save the best fit line to a file
 
 # Get best evolved network and show its activity
-bestind_num = int(ga.bestind[-1])
+bestind_num = int(ga.bestind[-1])   #Returns the index of the genotype that had the maximum fitness last
 print(bestind_num)
 bestind_genotype = ga.pop[bestind_num]
-np.save("gen"+id+".npy",bestind_genotype)
-
+np.save("gen"+id+".npy",bestind_genotype)   #saves the best genotype array to a file
 

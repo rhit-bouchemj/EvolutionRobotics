@@ -39,8 +39,8 @@ class FNN:
             if states.ndim == 1:
                 states = [states]
             if (l < self.num_layers - 1): 
-                states = self.hiddenactivation(np.matmul(states, self.weights[l]) + self.biases[l])
+                states = self.hiddenactivation(np.matmul(states, self.weights[l]) + self.biases[l]) #keep output greater than 0
             else:
-                states = self.outputactivation(np.matmul(states, self.weights[l]) + self.biases[l])
+                states = self.outputactivation(np.matmul(states, self.weights[l]) + self.biases[l]) #return sigmoid based result
         return states
 

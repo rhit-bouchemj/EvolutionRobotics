@@ -10,11 +10,11 @@ class MGA():
         self.mutationprob = mutationprob
         self.tournaments = tournaments
         self.fitnessfunction = fitnessfunction
-        self.pop = np.random.random((popsize,genesize))*2 - 1
-        self.fit = self.calculateFitness()
+        self.pop = np.random.random((popsize,genesize))*2 - 1 #Initial population of genes is range of -1 to 1 for array of population and genes
+        self.fit = self.calculateFitness()  #determine fitness of function based off of population composition
         # stats
-        gens = tournaments//popsize      
-        self.bestfit = np.zeros(gens)
+        gens = tournaments//popsize     #number of generations is the Math.floor(tournaments / popsize)
+        self.bestfit = np.zeros(gens)   #fitness recorded as a list(based on generation number)
         self.avgfit = np.zeros(gens)
         self.worstfit = np.zeros(gens)
         self.bestind = np.zeros(gens)
@@ -44,15 +44,15 @@ class MGA():
                     self.pop[loser][g] = self.pop[winner][g] 
             # 5 mutate loser
             self.pop[loser] += np.random.normal(0,self.mutationprob,self.genesize)
-            self.pop[loser] = np.clip(self.pop[loser],-1,1)
+            self.pop[loser] = np.clip(self.pop[loser],-1,1) #ensure the gene does not go past -1 or 1
             # Update
-            self.fit[loser] = self.fitnessfunction(self.pop[loser])
+            self.fit[loser] = self.fitnessfunction(self.pop[loser]) #update fitness of loser based on transfection and mutation
             # 6 Stats 
-            if t % self.popsize == 0:
+            if t % self.popsize == 0:   #If last pop of generation, record fitness
                 self.bestfit[gen] = np.max(self.fit)
                 self.avgfit[gen] = np.mean(self.fit)
                 self.worstfit[gen] = np.min(self.fit)
-                self.bestind[gen] = np.argmax(self.fit)                
+                self.bestind[gen] = np.argmax(self.fit)     #Max index of fitness   
                 gen += 1
                 #print(t,np.max(self.fit),np.mean(self.fit),np.min(self.fit),np.argmax(self.fit))
 
