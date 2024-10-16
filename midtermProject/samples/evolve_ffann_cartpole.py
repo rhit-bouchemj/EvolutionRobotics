@@ -12,15 +12,15 @@ id = sys.argv[1]
 layers = [3,10,10,1]
 
 # Task Params
-duration = 200000 # how many steps the sim takes
-stepsize = 0.02   # how mucht time is between each step
-noisestd = 0.01
+duration = 200000   # how many steps the sim takes
+stepsize = 0.02     # how mucht time is between each step
+noisestd = 0.01     # the amt of noise in the system
 
 # Time
-time = np.arange(0.0,duration,stepsize)
+time = np.arange(0.0,duration,stepsize)     # the array for each time section
 
 # EA Params
-popsize = 100
+popsize = 100   # number of elements in population
 genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
 recombProb = 0.5
 mutatProb = 0.01

@@ -15,10 +15,10 @@ class InvPendulum(): # TODO: change so that gravity acts on the center of mass o
         self.theta_dot = 0.0    # rate of change of pendulum angle
         self.force_mag = 2.0    #magnitude of force
 
-    def step(self, stepsize, u): # stepsize = amt of steps in a "second" (what should be set time), u = ? (array)
+    def step(self, stepsize, u): # stepsize = amt of steps in a "second" (what should be set time), u = ? (array) #no acceleration is calculated
         u = np.clip(u*self.force_mag, -self.max_torque, self.max_torque)[0] # u = force?
         cost = angle_normalize(self.theta)**2 + .1*self.theta_dot**2 + .001*(u**2)
-        self.theta_dot += stepsize * (-3*self.g/(2*self.l) * np.sin(self.theta + np.pi) + 3./(self.m*self.l**2)*u)
+        self.theta_dot += stepsize * (-3*self.g/(2*self.l) * np.sin(self.theta + np.pi) + 3./(self.m*self.l**2)*u) # derivative of theta
         self.theta += stepsize * self.theta_dot
         self.theta_dot = np.clip(self.theta_dot, -self.max_speed, self.max_speed)
         return -cost*stepsize
