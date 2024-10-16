@@ -25,4 +25,4 @@ class InvPendulum(): # TODO: change so that gravity acts on the center of mass o
         # return self.theta * stepsize
 
     def state(self):
-        return np.array([np.cos(self.theta), np.sin(self.theta), self.theta_dot]) #state of system defined  by cos, sin, and RoC of angle (need cos and sin?)
+        return np.array([np.cos(self.theta), np.sin(self.theta), self.theta_dot]) #state of system defined  by cos, sin, and angular velocity(need cos and sin?)
