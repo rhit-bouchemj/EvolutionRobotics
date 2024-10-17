@@ -1,5 +1,5 @@
 import ea
-import fnn
+import fnn2 as fnn
 import invpend
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +11,7 @@ id = sys.argv[1]
 layers = [3,10,10,1]
 
 # Task Params
-duration = 200
+duration = 20
 stepsize = 0.02
 noisestd = 0.01
 
@@ -28,12 +28,10 @@ tournaments = 500*popsize
 # Fitness initialization ranges
 trials_theta = 2
 trials_thetadot = 2
-trials_x = 2
-trials_xdot = 2
-total_trials = trials_theta*trials_thetadot*trials_x*trials_xdot
+total_trials = trials_theta*trials_thetadot
 
-theta_range = np.linspace(-0.05, 0.05, num=trials_theta)        # angle of the pendulum
-thetadot_range = np.linspace(-0.05, 0.05, num=trials_thetadot)  # angular velocity of pendulum (angle deriv)
+theta_range = np.linspace(np.pi - np.pi/20, np.pi + np.pi/20, num=trials_theta)        # angle of the pendulum
+thetadot_range = np.linspace(-0.25, 0.25, num=trials_thetadot)  # angular velocity of pendulum (angle deriv)
 
 # Fitness function
 def fitnessFunction(genotype):
@@ -52,11 +50,12 @@ def fitnessFunction(genotype):
             t = 0
             while t < duration:   #Until t is longer than the duration of the sym. or the system goes out of bounds (f becomes 0 when OoB)    
                 inp = body.state()  #input array into NN
+                # print("inputStates: ", inp)
                 out = nn.forward(inp)*2 - 1 + np.random.normal(0.0,noisestd)    #average the output around 0 (-1 to 1) and add random noise
                 f = body.step(stepsize, out)    #Out is a 2D array; return cosine of angle of pendulm where max 1 is at pi(and updates all paremeters as if time passed)
                 fit += f    #fitness determined based off of how long the system lasts (won't work for pendulumn)
                 t += stepsize   #update t <-- get closer to stopping sim
-    return fit/(duration*total_trials) #fitness function <-- 1 when all the initial conditions result in the robot staying alive
+    return fit/(duration*total_trials) #fitness function <-- averages fitness,(-) for down angle, 0 for up angle [never gets positive?]
 
 # Evolve and visualize fitness over generations
 ga = ea.MGA(fitnessFunction, genesize, popsize, recombProb, mutatProb, tournaments)

@@ -17,12 +17,20 @@ class InvPendulum(): # TODO: change so that gravity acts on the center of mass o
 
     def step(self, stepsize, u): # stepsize = amt of steps in a "second" (what should be set time), u = ? (array) #no acceleration is calculated
         u = np.clip(u*self.force_mag, -self.max_torque, self.max_torque)[0] # u = force?
+        u = float(u)
         cost = angle_normalize(self.theta)**2 + .1*self.theta_dot**2 + .001*(u**2)  #cosine? angle^2 + angleDer^2 + u^2
         self.theta_dot += stepsize * (-3*self.g/(2*self.l) * np.sin(self.theta + np.pi) + 3./(self.m*self.l**2)*u)  #derivative of theta
+        # print("u:", u)
+        # print("theta_dot:",self.theta_dot)
+        # print("step:",self.theta)
         self.theta += stepsize * self.theta_dot #have to normalize?
+        # print("poststep:", self.theta)
         self.theta_dot = np.clip(self.theta_dot, -self.max_speed, self.max_speed)
-        return -cost*stepsize
+        return -cost*stepsize #returns 0 at peak and (-) value at low angle
         # return self.theta * stepsize
 
     def state(self):
+        # print("State:", np.array([np.cos(self.theta), np.sin(self.theta), self.theta_dot]))
+        # print("theta:", self.theta)
+        # print("costheta:", np.cos(self.theta))
         return np.array([np.cos(self.theta), np.sin(self.theta), self.theta_dot]) #state of system defined  by cos, sin, and angular velocity(need cos and sin?)

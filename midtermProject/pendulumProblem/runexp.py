@@ -14,4 +14,4 @@ print(reps)
 print(currentpath)
 
 for i in range(reps):
-    os.system("python ../evolve_ffann_cartpole.py "+str(i)+" &")
+    os.system("python ../evolve_ffann_pendulum.py "+str(i)+" &")
