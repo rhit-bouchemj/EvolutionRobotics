@@ -12,18 +12,18 @@ layers = [3,10,10,1]
 
 # Task Params
 duration = 20
-stepsize = 0.02
+stepsize = 0.1
 noisestd = 0.01
 
 # Time
 time = np.arange(0.0,duration,stepsize)
 
 # EA Params
-popsize = 100
+popsize = 25
 genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
 recombProb = 0.5
 mutatProb = 0.01
-tournaments = 500*popsize
+tournaments = 100*popsize
 
 # Fitness initialization ranges
 trials_theta = 2
@@ -40,6 +40,7 @@ def fitnessFunction(genotype):
     body = invpend.InvPendulum()
     fit = 0.0
     # vary initial condition
+    k = 0
     for theta in theta_range: # theta starts at -0.05? then at 0.5 (to train with different starting positions)
         for theta_dot in thetadot_range: # diff angular velocity starts
                     #initialize all variables for hte system (cart and pole)
@@ -50,16 +51,19 @@ def fitnessFunction(genotype):
             t = 0
             while t < duration:   #Until t is longer than the duration of the sym. or the system goes out of bounds (f becomes 0 when OoB)    
                 inp = body.state()  #input array into NN
-                # print("inputStates: ", inp)
+                # print("t value: ",k, t)
                 out = nn.forward(inp)*2 - 1 + np.random.normal(0.0,noisestd)    #average the output around 0 (-1 to 1) and add random noise
                 f = body.step(stepsize, out)    #Out is a 2D array; return cosine of angle of pendulm where max 1 is at pi(and updates all paremeters as if time passed)
                 fit += f    #fitness determined based off of how long the system lasts (won't work for pendulumn)
                 t += stepsize   #update t <-- get closer to stopping sim
+            k += 1
     return fit/(duration*total_trials) #fitness function <-- averages fitness,(-) for down angle, 0 for up angle [never gets positive?]
 
 # Evolve and visualize fitness over generations
 ga = ea.MGA(fitnessFunction, genesize, popsize, recombProb, mutatProb, tournaments)
+print("ga made")
 ga.run()
+print("ga ran")
 np.save("evol"+id+".npy",ga.bestfit)    #Save the best fit line to a file
 
 # Get best evolved network and show its activity

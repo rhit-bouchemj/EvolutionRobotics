@@ -29,6 +29,8 @@ class MGA():
         # 1 loop for tour
         gen = 0
         for t in range(self.tournaments):
+            if(t % 100 == 0):
+                print("tourney ran", t)
             # 2 pick two to fight (same could be picked -- fix)
             [a,b] = np.random.choice(np.arange(self.popsize),2,replace=False)
             # 3 pick winner

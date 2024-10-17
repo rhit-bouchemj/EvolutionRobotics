@@ -17,4 +17,5 @@ for i in range(reps):
 plt.xlabel("Generations")
 plt.ylabel("Fitness")
 plt.title("Evolution")
+plt.legend(range(reps))
 plt.show()

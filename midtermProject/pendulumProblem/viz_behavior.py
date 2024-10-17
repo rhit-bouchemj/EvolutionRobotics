@@ -1,5 +1,5 @@
 import ea                  
-import fnn                
+import fnn2 as fnn          
 import invpend
 import numpy as np
 import matplotlib.pyplot as plt
