@@ -19,7 +19,7 @@ noisestd = 0.01
 time = np.arange(0.0,duration,stepsize)
 
 # EA Params
-popsize = 25
+popsize = 50
 genesize = np.sum(np.multiply(layers[1:],layers[:-1])) + np.sum(layers[1:]) 
 recombProb = 0.5
 mutatProb = 0.01
@@ -43,7 +43,7 @@ def fitnessFunction(genotype):
     k = 0
     for theta in theta_range: # theta starts at -0.05? then at 0.5 (to train with different starting positions)
         for theta_dot in thetadot_range: # diff angular velocity starts
-                    #initialize all variables for hte system (cart and pole)
+                    #initialize all variables for the system (cart and pole)
             body.theta = theta  
             body.theta_dot = theta_dot
             # make sure getting proper number of steps 

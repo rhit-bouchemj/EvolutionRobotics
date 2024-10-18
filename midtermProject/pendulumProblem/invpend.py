@@ -6,8 +6,8 @@ def angle_normalize(x): # input = radians
 class InvPendulum(): # TODO: change so that gravity acts on the center of mass of pendulum?
 
     def __init__(self):
-        self.max_speed = 8.0    # TODO: rotational speed?
-        self.max_torque = 2.0   # Max instant force?
+        self.max_speed = 8.0    # TODO: rotational speed? # low = 5
+        self.max_torque = 2.0   # Max instant force? #low = 1
         self.g = 10.0           # gravity
         self.m = 1.0            # mass
         self.l = 1.0            # pole length

@@ -32,7 +32,7 @@ def evaluate(genotype): # repeat of fitness function but saving theta
     body = invpend.InvPendulum()
     out_hist = np.zeros((len(time),3))
     f_hist=np.zeros(len(time))
-    body.theta = 0          #record the variables as the fitness is calculated (doesn't evolve)
+    body.theta = np.pi          #record the variables as the fitness is calculated (doesn't evolve)
     body.theta_dot = 0
     k=0
     for t in time:
