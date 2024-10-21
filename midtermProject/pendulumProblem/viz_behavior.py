@@ -30,7 +30,8 @@ def evaluate(genotype): # repeat of fitness function but saving theta
     nn = fnn.FNN(layers)
     nn.setParams(genotype)  #Use the specific genotype of best iteration
     body = invpend.InvPendulum()
-    out_hist = np.zeros((len(time),3))
+    out_hist = np.zeros((len(time),1))
+    in_hist = np.zeros((len(time),3))
     f_hist=np.zeros(len(time))
     body.theta = np.pi          #record the variables as the fitness is calculated (doesn't evolve)
     body.theta_dot = 0
@@ -39,17 +40,20 @@ def evaluate(genotype): # repeat of fitness function but saving theta
         inp = body.state()
         out = nn.forward(inp)*2-1 + np.random.normal(0.0,noisestd)
         f = body.step(stepsize, out)
-        out_hist[k] = inp   #record what variables were
+        # body.render()
+        in_hist[k] = inp   #record what variables were
+        out_hist[k] = body.last_u#out
         f_hist[k] = f       #record instantaneous fitness
         k += 1              #index
-    return out_hist, f_hist
+    return in_hist, f_hist, out_hist
 
-out_hist1, f_hist1 = evaluate(bestind_genotype)
+in_hist1, f_hist1, out_hist1 = evaluate(bestind_genotype)
 
-plt.plot(out_hist1)
+plt.plot(in_hist1)
 plt.plot(f_hist1*50,'k',label="Output")
+plt.plot(out_hist1)
 plt.xlabel("Time")
-plt.ylabel("Several different things!")
-plt.legend(["cos_theta","sin_theta","ang. vel"])
+plt.ylabel("Inputs & Outputs & Fitness")
+plt.legend(["cos_theta","sin_theta","ang. vel", "instant fitness", "Torque"])
 plt.title("Agent #"+id)
 plt.show()
