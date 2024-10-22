@@ -40,7 +40,7 @@ def evaluate(genotype): # repeat of fitness function but saving theta
         inp = body.state()
         out = nn.forward(inp)*2-1 + np.random.normal(0.0,noisestd)
         f = body.step(stepsize, out)
-        # body.render()
+        body.render()
         in_hist[k] = inp   #record what variables were
         out_hist[k] = body.last_u#out
         f_hist[k] = f       #record instantaneous fitness
