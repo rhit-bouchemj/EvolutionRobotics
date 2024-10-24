@@ -36,12 +36,34 @@ def Create_KickingBot():
     ps.Send_Joint(name="rightFoot_Torso", parent="Torso", child="rightFoot", type="revolute", position=[-l/2, 0, h])
     ps.Send_Joint(name="leftCrutch_Torso", parent="Torso", child="leftCrutch", type="revolute", position=[0, w/2, h])
     ps.Send_Joint(name="rightCrutch_Torso", parent="Torso", child="rightCrutch", type="revolute", position=[0, -w/2, h])
-    # ps.Send_Joint(name="pp", parent="pp", child="pp", type)
-
-    # ps.Send_Joint
-
-
-    # ps.Send_Cyllinder/
     ps.End()
 
-Create_KickingBot()
+def Create_FlipperBot():
+    # ps.Start_URDF("flipperBody.urdf")
+    # ps.Send_Cube(name="Torso", pos=[x+3*l,y+3*h,z+h], size=[l,w,h]) #Child of left Foot
+    # ps.Send_Cube(name="frontCrutch", pos=[l/2,0,-h/4], size=[l,w,h/2]) # parent because want to start from ground up (that way I don't have to calculate torso first)
+    # ps.Send_Cube(name="flipperFoot", pos=[-l ,0,-h/4], size=[l*2,w,h/2]) #Child of torso
+    # ps.Send_Cube(name="leftCrutch", pos=[0,w/2,-h/4], size=[l,w,h/2])
+    # ps.Send_Cube(name="rightCrutch", pos=[0,-w/2,-h/4], size=[l,w,h/2])
+    # ps.Send_Joint(name="leftFoot_Torso", parent="Torso", child="leftFoot", type="continuous", position=[l/2, 0, h]) # want point in center of cubes
+    # ps.Send_Joint(name="rightFoot_Torso", parent="Torso", child="rightFoot", type="revolute", position=[-l/2, 0, h])
+    # ps.Send_Joint(name="leftCrutch_Torso", parent="Torso", child="leftCrutch", type="revolute", position=[0, w/2, h])
+    # ps.Send_Joint(name="rightCrutch_Torso", parent="Torso", child="rightCrutch", type="revolute", position=[0, -w/2, h])
+    # ps.End()
+    offsetL = 3*l
+    offsetW = 3*w
+    ps.Start_URDF("flipperBody.urdf")
+    ps.Send_Cube(name="Torso", pos=[x+offsetL,y++offsetW,z+h], size=[l,w,h]) #Child of left Foot
+    ps.Send_Cube(name="leftFoot", pos=[l/2,0,-h/4], size=[l,w,h/2]) # parent because want to start from ground up (that way I don't have to calculate torso first)
+    ps.Send_Cube(name="rightFoot", pos=[-l ,0,-h/4], size=[l*2,w,h/2]) #Child of torso
+    ps.Send_Cube(name="leftCrutch", pos=[0,w/2,-h/4], size=[l,w,h/2])
+    ps.Send_Cube(name="rightCrutch", pos=[0,-w/2,-h/4], size=[l,w,h/2])
+    ps.Send_Joint(name="leftFoot_Torso", parent="Torso", child="leftFoot", type="continuous", position=[l/2+offsetL, offsetW, h]) # want point in center of cubes
+    ps.Send_Joint(name="rightFoot_Torso", parent="Torso", child="rightFoot", type="revolute", position=[-l/2+offsetL, offsetW, h])
+    ps.Send_Joint(name="leftCrutch_Torso", parent="Torso", child="leftCrutch", type="revolute", position=[offsetL, w/2+offsetW, h])
+    ps.Send_Joint(name="rightCrutch_Torso", parent="Torso", child="rightCrutch", type="revolute", position=[offsetL, -w/2+offsetW, h])
+    ps.End()
+
+
+# Create_KickingBot()
+Create_FlipperBot()

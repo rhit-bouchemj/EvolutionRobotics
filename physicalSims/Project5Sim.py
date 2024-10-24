@@ -15,39 +15,46 @@ p.setGravity(0,0,-9.8)
 planeId = p.loadURDF("plane.urdf")
 # p.loadSDF("box.sdf")
 robotId = p.loadURDF("body.urdf")
+flipperID = p.loadURDF("flipperBody.urdf")
 
 duration = 10000
 
 ps.Prepare_To_Simulate(robotId)
+ps.Prepare_To_Simulate(flipperID)
 
 x = np.linspace(0, 10*np.pi, duration)
 leftY = np.tan(x) * np.pi/4
 rightY = np.tan(x+np.pi/2) * np.pi/4
 print(range(len(rightY)))
 for index in range(len(rightY)):
-    rightY[index] = min(rightY[index], 1.5)
-    rightY[index] = max(rightY[index], -1.5)
+    rightY[index] = min(rightY[index], np.pi/2)
+    rightY[index] = max(rightY[index], -np.pi/2)
     # leftY[index] = min(leftY[index], 1.5)
     # leftY[index] = max(leftY[index], -1.5)
     # print(edge)
 # print(range(rightY))
 
-# time.sleep(5)
+time.sleep(10)
 
-# for i in range(duration):
-#     # ps.Set_Motor_For_Joint(bodyIndex = robotId,
-#     #                        jointName = b'leftFoot_Torso',
-#     #                        controlMode = p.POSITION_CONTROL,
-#     #                        targetPosition = leftY[i],
-#     #                        maxForce = 500)
-#     ps.Set_Motor_For_Joint(bodyIndex = robotId,
-#                            jointName = b'rightFoot_Torso',
-#                            controlMode = p.POSITION_CONTROL,
-#                            targetPosition = rightY[i],
-#                            maxForce = 500)
+for i in range(duration):
+    # ps.Set_Motor_For_Joint(bodyIndex = robotId,
+    #                        jointName = b'leftFoot_Torso',
+    #                        controlMode = p.POSITION_CONTROL,
+    #                        targetPosition = leftY[i],
+    #                        maxForce = 500)
+    ps.Set_Motor_For_Joint(bodyIndex = robotId,
+                           jointName = b'rightFoot_Torso',
+                           controlMode = p.POSITION_CONTROL,
+                           targetPosition = rightY[i],
+                           maxForce = 500)
+    ps.Set_Motor_For_Joint(bodyIndex = flipperID,
+                           jointName = b'rightFoot_Torso',
+                           controlMode = p.POSITION_CONTROL,
+                           targetPosition = rightY[i],
+                           maxForce = 500)
 
-#     p.stepSimulation()
-    # time.sleep(1/500)
+    p.stepSimulation()
+    time.sleep(1/500)
 
 p.disconnect()
 
