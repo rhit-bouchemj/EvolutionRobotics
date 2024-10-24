@@ -4,7 +4,7 @@ import time
 import pyrosim.pyrosim as ps
 import numpy as np
 import matplotlib.pyplot as plt
-import math
+import time
 
 
 physicsClient = p.connect(p.GUI)
@@ -32,22 +32,27 @@ for index in range(len(rightY)):
     # print(edge)
 # print(range(rightY))
 
-for i in range(duration):
-    # ps.Set_Motor_For_Joint(bodyIndex = robotId,
-    #                        jointName = b'leftFoot_Torso',
-    #                        controlMode = p.POSITION_CONTROL,
-    #                        targetPosition = leftY[i],
-    #                        maxForce = 500)
-    ps.Set_Motor_For_Joint(bodyIndex = robotId,
-                           jointName = b'rightFoot_Torso',
-                           controlMode = p.POSITION_CONTROL,
-                           targetPosition = rightY[i],
-                           maxForce = 500)
+# time.sleep(5)
 
-    p.stepSimulation()
-    time.sleep(1/500)
+# for i in range(duration):
+#     # ps.Set_Motor_For_Joint(bodyIndex = robotId,
+#     #                        jointName = b'leftFoot_Torso',
+#     #                        controlMode = p.POSITION_CONTROL,
+#     #                        targetPosition = leftY[i],
+#     #                        maxForce = 500)
+#     ps.Set_Motor_For_Joint(bodyIndex = robotId,
+#                            jointName = b'rightFoot_Torso',
+#                            controlMode = p.POSITION_CONTROL,
+#                            targetPosition = rightY[i],
+#                            maxForce = 500)
+
+#     p.stepSimulation()
+    # time.sleep(1/500)
 
 p.disconnect()
 
 plt.plot(rightY)
+plt.xlabel("time")
+plt.ylabel("position")
+plt.legend("Kicker position")
 plt.show()

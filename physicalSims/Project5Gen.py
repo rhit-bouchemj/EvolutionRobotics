@@ -25,7 +25,7 @@ def Create_Robot():
     ps.Send_Cube(name="Torso", pos=[l/2, 0, h/2], size=[l,w,h]) # Child <-- position is recorded relatively to the joint to the parent; position = relative o the joint connecting it to the parent
     ps.End()
 
-def Create_WaddleBot():
+def Create_KickingBot():
     ps.Start_URDF("body.urdf")
     ps.Send_Cube(name="Torso", pos=[x,y,z+h], size=[l,w,h]) #Child of left Foot
     ps.Send_Cube(name="leftFoot", pos=[l/2,0,-h/4], size=[l,w,h/2]) # parent because want to start from ground up (that way I don't have to calculate torso first)
@@ -44,4 +44,4 @@ def Create_WaddleBot():
     # ps.Send_Cyllinder/
     ps.End()
 
-Create_WaddleBot()
+Create_KickingBot()
