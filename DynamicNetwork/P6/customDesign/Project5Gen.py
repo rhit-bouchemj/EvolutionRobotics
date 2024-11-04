@@ -47,7 +47,7 @@ def Create_FlipperBot():
     ps.Send_Cube(name="rightFoot", pos=[-l/2,0,-h/4], size=[l,w,h/2]) #Child of torso
     ps.Send_Cube(name="leftCrutch", pos=[0,w/2,-h/4], size=[l,w,h/2])
     ps.Send_Cube(name="rightCrutch", pos=[0,-w/2,-h/4], size=[l,w,h/2])
-    ps.Send_Joint(name="leftFoot_Torso", parent="Torso", child="leftFoot", type="continuous", position=[l/2+offsetL, offsetW, h]) # want point in center of cubes
+    ps.Send_Joint(name="leftFoot_Torso", parent="Torso", child="leftFoot", type="revolute", position=[l/2+offsetL, offsetW, h]) # want point in center of cubes
     ps.Send_Joint(name="rightFoot_Torso", parent="Torso", child="rightFoot", type="revolute", position=[-l/2+offsetL, offsetW, h])
     ps.Send_Joint(name="leftCrutch_Torso", parent="Torso", child="leftCrutch", type="revolute", position=[offsetL, w/2+offsetW, h])
     ps.Send_Joint(name="rightCrutch_Torso", parent="Torso", child="rightCrutch", type="revolute", position=[offsetL, -w/2+offsetW, h])
