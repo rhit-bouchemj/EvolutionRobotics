@@ -48,3 +48,6 @@ class CTRNN():
         self.Biases = params['biases']
         self.TimeConstants = params['timeconstants']
         self.invTimeConstants = 1.0/self.TimeConstants
+
+    def shiftedOutput(self, shiftValue):
+        return 2*np.pi*self.Outputs - np.pi
