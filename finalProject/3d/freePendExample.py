@@ -49,7 +49,11 @@ cubeStartPos = [-2.15,0,.75]
 cubeStartPos2 = [0,0,1.4]
 cubeStartPos3 = [2.15,0,.75]
 
+<<<<<<< HEAD
 cubeStartOrientation1 = p.getQuaternionFromEuler([1.570796, 0, 0])  
+=======
+xxxssssssssssssssssscssssssssssssssssscssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssa = p.getQuaternionFromEuler([1.570796, 0, 0])  
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
 cubeStartOrientation = p.getQuaternionFromEuler([0,0,0]) 
 cubeStartOrientation2 = p.getQuaternionFromEuler([0,-1.570796,0])
 
@@ -85,7 +89,10 @@ last_tendon_link_2 = jointNameToId['tendon1_13_tendon1_14']
 Base_pulley_2 = jointNameToId['Base_pulley1']
 """_____________________________________________________________________________________________________________________________"""
 """Creating new contraints (joints), with the information obtained in the previous step"""
+<<<<<<< HEAD
 print("weird goop", last_tendon_link_1)
+=======
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
 
 pulley_1_tendon_magenta = p.createConstraint(base_1, Base_pulley_1, pendulum, last_tendon_link_1, p.JOINT_FIXED, [0, 0, 1], [0, 0, 0], [-.56, 0, 0])
 tendon_white_cart = p.createConstraint(base_2, last_tendon_link_2, pendulum, cart, p.JOINT_FIXED, [0, 0, 1], [0, 0, 0], [0,-.55, 0])

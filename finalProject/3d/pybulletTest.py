@@ -29,6 +29,7 @@ pendulum = p.createMultiBody(
     basePosition=[0, 0, 1 - rod_length / 2],  # Position the center of the rod below the base
 )
 
+<<<<<<< HEAD
 nJoints = p.getNumJoints(pendulum)
 print("skibidi rizz", nJoints)
 
@@ -41,12 +42,20 @@ for i in range(nJoints):
 
 # Add a revolute joint to pin the pendulum to the base
 # p.setup_revolute()
+=======
+# Add a revolute joint to pin the pendulum to the base
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
 p.createConstraint(
     parentBodyUniqueId=base,
     parentLinkIndex=-1,  # Parent is the base (fixed)
     childBodyUniqueId=pendulum,
+<<<<<<< HEAD
     childLinkIndex=4,  # Child is the pendulum rod
     jointType=p.JOINT_GEAR,
+=======
+    childLinkIndex=-1,  # Child is the pendulum rod
+    jointType=p.JOINT_REVOLUTE,
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
     jointAxis=[0, 1, 0],  # Revolute joint around the Y-axis
     parentFramePosition=[0, 0, 1],  # Position of the joint on the base
     childFramePosition=[0, 0, rod_length / 2],  # Position of the joint on the pendulum

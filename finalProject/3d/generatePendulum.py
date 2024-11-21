@@ -27,6 +27,7 @@ def Create_Robot():
 
 def Create_pendulum():
     # ps.Start_SDF("invertedPendulum.sdf")
+<<<<<<< HEAD
     ps.Start_URDF("pendulum.urdf")
     ps.Send_Cube(
         name="Base",
@@ -37,14 +38,30 @@ def Create_pendulum():
     ps.Send_Cube(
         name="Beam",
         pos=[0, 0, 2],  # Position of the beam
+=======
+    ps.Start_URDF("body.urdf")
+    ps.Send_Cube(
+        name="Base",
+        pos=[0, 0, 1],  # Position of the base (e.g., 1 unit above ground)
+        size=[0.2, 0.2, 0.2],  # Size of the base
+    )
+    ps.Send_Cube(
+        name="Beam",
+        pos=[0, 0, 1],  # Position of the beam
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
         size=[0.1, 0.1, 2.0],  # Size of the beam (e.g., 2 units long)
     )
     ps.Send_Joint(
         name="Base_Beam_Joint",
         parent="Base",
         child="Beam",
+<<<<<<< HEAD
         type="continous",  # Joint type
         # position=[0, 0, 0],  # Joint location (e.g., edge of the base)
+=======
+        type="revolute",  # Joint type
+        position=[0, 0, 1],  # Joint location (e.g., edge of the base)
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
         # jointAxis="0 1 0",  # Rotation axis (e.g., around the Y-axis)
     )
     ps.End()

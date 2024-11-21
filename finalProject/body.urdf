@@ -1,20 +1,33 @@
 <robot name = "robot">
+<<<<<<< HEAD
     <link name="Foot1">
         <inertial>
             <origin xyz="0 0 0.5" rpy="0 0 0"/>
+=======
+    <link name="Base">
+        <inertial>
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
             <mass value="1" />
             <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
         </inertial>
         <visual>
+<<<<<<< HEAD
             <origin xyz="0 0 0.5" rpy="0 0 0"/>
             <geometry>
                 <box size="0.5 0.2 1" />
+=======
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.2 0.2" />
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
             </geometry>
             <material name="Cyan">
                 <color rgba="0 1.0 1.0 1.0"/>
             </material>
         </visual>
         <collision>
+<<<<<<< HEAD
             <origin xyz="0 0 0.5" rpy="0 0 0"/>
             <geometry>
                 <box size="0.5 0.2 1" />
@@ -137,4 +150,41 @@
             </geometry>
         </collision>
     </link>
+=======
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.2 0.2" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="Beam">
+        <inertial>
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+            <mass value="1" />
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 2.0" />
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 1" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 2.0" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Base_Beam_Joint" type="revolute">
+       <parent link="Base"/>
+       <child  link="Beam"/>
+       <origin rpy="0 0 0" xyz="0 0 1" />
+       <axis xyz="0 1 0"/>
+       <limit effort="0.0" lower="-3.14159" upper="3.14159" velocity="0.0"/>
+    </joint>
+>>>>>>> 35398eee18f6a38eedf585115b32a31aca565cbd
 </robot>
